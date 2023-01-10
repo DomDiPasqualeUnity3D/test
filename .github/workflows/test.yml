@@ -13,3 +13,8 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: |
         echo "$GITHUB_CONTEXT"
+  debugJob:
+    name: Debug event
+    runs-on: ubuntu-latest
+    steps:
+    - uses: hmarr/debug-action@v2
