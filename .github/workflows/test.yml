@@ -4,7 +4,7 @@ on:
     types: [opened, edited, synchronize, closed, reopened]
 
 jobs:
-  printJob:
+  print:
     name: Print event
     runs-on: ubuntu-latest
     steps:
@@ -13,8 +13,17 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: |
         echo "$GITHUB_CONTEXT"
-  debugJob:
+  debug:
     name: Debug event
     runs-on: ubuntu-latest
     steps:
     - uses: hmarr/debug-action@v2
+  lint:
+    name: lint event
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/super-linter@v4
+      env:
+        DEFAULT_BRANCH: master
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
