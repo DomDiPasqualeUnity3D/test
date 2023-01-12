@@ -1,0 +1,30 @@
+# change this to the event type you want to get the data for
+on:
+  pull_request:
+    types: [opened, edited, synchronize, closed, reopened]
+
+jobs:
+  print:
+    name: Print event
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_CONTEXT"
+  debug:
+    name: Debug event
+    runs-on: ubuntu-latest
+    steps:
+    - uses: hmarr/debug-action@v2
+  lint:
+    name: lint event
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: github/super-linter@v4
+      env:
+        VALIDATE_ALL_CODEBASE: false
+        DEFAULT_BRANCH: master
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
